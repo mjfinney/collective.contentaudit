@@ -1,0 +1,5 @@
+====================
+collective.contentaudit
+====================
+
+User documentation

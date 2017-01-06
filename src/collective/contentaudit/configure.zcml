@@ -34,4 +34,6 @@
       factory=".setuphandlers.HiddenProfiles"
       name="collective.contentaudit-hiddenprofiles" />
 
+  <adapter name="local_role_list" factory=".indexers.local_role_list" />
+
 </configure>

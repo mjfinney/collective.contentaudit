@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="collective.contentaudit">
+
+    
+<metal:text metal:fill-slot="content-core">
+    <div id="form-input">
+        <span tal:replace="structure view/contents" />
+    </div>
+
+    <div id="form-output" tal:define="output view/form_instance/output;"
+                          tal:condition="output">
+        <div tal:condition="python: output.get('path')">Path Used: <span tal:content="output/path"></span>
+        </div>
+        <div><span tal:content="python: len(output.get('pages'))"></span> Pages Found</div>
+        <ul>
+            <li tal:repeat="item output/pages">
+                <a tal:attributes="href item/getURL" tal:content="item/Title"></a>
+            </li>
+        </ul>
+    </div>
+</metal:text>
+
+</html>

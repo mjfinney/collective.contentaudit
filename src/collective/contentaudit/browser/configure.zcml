@@ -18,4 +18,12 @@
       directory="static"
       />
 
+  <browser:page
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      name="permission-report"
+      class = ".permissions.PermissionAuditFormView"
+      layer="..interfaces.ICollectiveContentauditLayer"
+      permission="cmf.ManagePortal"
+      />
+
 </configure>

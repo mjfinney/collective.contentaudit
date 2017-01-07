@@ -29,6 +29,10 @@
       post_handler=".setuphandlers.uninstall"
       />
 
+  <permission
+    id="contentaudit.reportsPermission"
+    title="ContentAudit: ReportsPermission" />
+
 
   <utility
       factory=".setuphandlers.HiddenProfiles"

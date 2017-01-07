@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+ <rolemap>
+  <roles>
+    <role name="Reporter"/>
+  </roles>
+  <permissions>
+    <permission name="ContentAudit: ReportsPermission" acquire="False">
+      <role name="Reporter"/>
+      <role name="Site Administrator"/>
+      <role name="Manager"/>
+    </permission>
+  </permissions>
+ </rolemap>

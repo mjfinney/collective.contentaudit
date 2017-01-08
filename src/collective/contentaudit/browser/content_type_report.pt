@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="collective.contentaudit">
+
+    
+<metal:text metal:fill-slot="content-core">
+    <div id="form-input">
+        <span tal:replace="structure view/contents" />
+    </div>
+    <div id="form-output" tal:define="output view/form_instance/output;"
+                          tal:condition="output">
+      <div id="contenttype-list"
+           tal:define="brains output/pages;
+                       type string:page;">
+          <h2><span tal:replace="python: len(brains)"></span> <span tal:replace="type"></span></h2>
+          <table class="sortable">
+              <tr>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Creator</th>
+                  <th>Modified Date</th>
+                  <th>Keywords</th>
+              </tr>
+              <tr tal:repeat="brain brains">
+                  <td><a tal:attributes="href brain/getURL"
+                         tal:content="brain/Title"></a></td>
+                  <td tal:content="brain/Description"></td>
+                  <td tal:content="brain/Creator"></td>
+                  <td tal:content="brain/modified"></td>
+                  <td tal:content="brain/Subject"></td>
+              </tr>
+          </table>
+      </div>
+    </div>
+
+</metal:text>
+
+</html>

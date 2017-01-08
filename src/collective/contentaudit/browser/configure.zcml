@@ -40,6 +40,14 @@
 
   <browser:page
       for="Products.CMFCore.interfaces.ISiteRoot"
+      name="content-type-report"
+      class = ".content_type_report.ContentTypeReportFormView"
+      layer="..interfaces.ICollectiveContentauditLayer"
+      permission="contentaudit.reportspermission"
+      />
+
+  <browser:page
+      for="Products.CMFCore.interfaces.ISiteRoot"
       name="permission-report"
       class = ".permissions.PermissionAuditFormView"
       layer="..interfaces.ICollectiveContentauditLayer"

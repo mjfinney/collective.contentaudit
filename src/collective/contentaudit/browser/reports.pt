@@ -9,9 +9,24 @@
     
 <metal:text metal:fill-slot="content-core">
     <div id="report-list">
+        <h2>Reports</h2>
         <ul tal:define="reports view/getReportList">
             <li tal:repeat="report reports"><a tal:attributes="href report/id" tal:content="report/title"></a></li>
         </ul>
+    </div>
+    <div id="contenttype-list">
+        <h2>Content Types</h2>
+        <table tal:define="types view/getStatList">
+            <tr>
+                <th>Content Type</th>
+                <th>Number</th>
+            </tr>
+            <tr tal:repeat="type types">
+                <td><a tal:attributes="href string:@@content-type-report?form.widgets.portal_type=${type}&form.buttons.53686f77205061676573=Show+Pages"
+                       tal:content="type"></a></td>
+                <td tal:content="types/?type"></td>
+            </tr>
+        </table>
     </div>
 
 </metal:text>

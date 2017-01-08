@@ -38,7 +38,6 @@ class IPermissionAuditForm(Interface):
 class PermissionAuditForm(form.Form):
     """ This form can be accessed as http://yoursite/@@permission-report """
 
-    #template = ViewPageTemplateFile('permissions.pt')
     fields = field.Fields(IPermissionAuditForm)
     ignoreContext = True
     enableCSRFProtection = True
@@ -50,7 +49,7 @@ class PermissionAuditForm(form.Form):
     output = None
 
     @button.buttonAndHandler(u'Show Pages')
-    def handleShowSingleUser(self, action):
+    def handleShowPages(self, action):
         data, errors = self.extractData()
         if errors:
             self.status = self.formErrorsMessage

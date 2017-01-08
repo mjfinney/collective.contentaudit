@@ -18,12 +18,32 @@
       directory="static"
       />
 
+  <permission
+    id="contentaudit.reportspermission"
+    title="ContentAudit: ReportsPermission" />
+
+  <browser:page
+    name="contentaudit-controlpanel"
+    for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    class=".controlpanel.ContentAuditControlPanelView"
+    permission="cmf.ManagePortal"
+    />
+
+  <browser:page
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      name="content-reports"
+      template="reports.pt"
+      class = ".reports.ReportsMainView"
+      layer="..interfaces.ICollectiveContentauditLayer"
+      permission="contentaudit.reportspermission"
+      />
+
   <browser:page
       for="Products.CMFCore.interfaces.ISiteRoot"
       name="permission-report"
       class = ".permissions.PermissionAuditFormView"
       layer="..interfaces.ICollectiveContentauditLayer"
-      permission="cmf.ManagePortal"
+      permission="contentaudit.reportspermission"
       />
 
 </configure>

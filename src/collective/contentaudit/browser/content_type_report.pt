@@ -8,6 +8,7 @@
 
     
 <metal:text metal:fill-slot="content-core">
+    <a href="@@content-reports">Back to Reports Main Page</a>
     <div id="form-input">
         <span tal:replace="structure view/contents" />
     </div>

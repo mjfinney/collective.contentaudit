@@ -64,7 +64,7 @@ class PermissionAuditForm(form.Form):
 
         self.output = {'pages': pages,
                        'path': data.get('path'),
-                       'usernmae': data.get('username'),
+                       'username': data.get('username'),
                        }
         # Set status on this form page
         # (this status message is not bind to the session and does not go thru redirects)

@@ -83,7 +83,8 @@ class ContentTypeReportForm(form.Form):
 
         self.output = {'pages': api.content.find(**query),
                        'path': data.get('path'),
-                       'usernmae': data.get('username'),
+                       'portal_type': data.get('portal_type'),
+                       'modified': data.get('before_date'),
                        }
 
     def formatQuery(self, data):

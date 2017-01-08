@@ -12,12 +12,13 @@
     <div id="form-input">
         <span tal:replace="structure view/contents" />
     </div>
-    <div id="form-output" tal:define="output view/form_instance/output;"
+    <div id="form-output" tal:define="output view/form_instance/output;
+                                      brains python:output.get('pages');"
                           tal:condition="output">
-      <div id="contenttype-list"
-           tal:define="brains output/pages;
-                       type string:page;">
-          <h2><span tal:replace="python: len(brains)"></span> <span tal:replace="type"></span></h2>
+      <h2><span tal:replace="python: len(brains)"></span> items of type <span tal:replace="python: output.get('portal_type')"></span></h2>
+      <div tal:condition="python: output.get('path')">Path Used: <span tal:content="output/path"></span></div>
+      <div tal:condition="output/modified">Max Modified Date: <span tal:content="output/modified"></span></div>
+      <div id="contenttype-list">
           <table class="sortable">
               <tr>
                   <th>Title</th>

@@ -44,7 +44,7 @@ class PermissionAuditForm(form.Form):
     method = 'get'
 
     label = u"Permissions Audit Report"
-    description = u"Choose a user from the list below"
+    description = u"Select a user, group, and/or path. If user and group are selected only user will be used."
 
     output = None
 

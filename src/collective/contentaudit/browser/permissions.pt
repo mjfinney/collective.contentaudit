@@ -18,11 +18,16 @@
         <div tal:condition="python: output.get('path')">Path Used: <span tal:content="output/path"></span>
         </div>
         <div><span tal:content="python: len(output.get('pages'))"></span> Pages Found</div>
-        <ul>
-            <li tal:repeat="item output/pages">
-                <a tal:attributes="href item/getURL" tal:content="item/Title"></a>
-            </li>
-        </ul>
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Sharing</th>
+            </tr>
+            <tr tal:repeat="item output/pages">
+                <td><a tal:attributes="href item/getURL" tal:content="item/Title"></a></td>
+                <td><a tal:attributes="href string:${item/getURL}/@@sharing">View Sharing tab</a></td>
+            </tr>
+        </table>
     </div>
 </metal:text>
 

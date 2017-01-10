@@ -17,6 +17,12 @@
                           tal:condition="output">
         <div tal:condition="python: output.get('path')">Path Used: <span tal:content="output/path"></span>
         </div>
+        <div tal:condition="python: output.get('members')">
+            Group Members: 
+            <ul tal:repeat="member python:output.get('members')">
+                <li><span tal:replace="python:member.getProperty('fullname')"></span> (<span tal:replace="python:member.getProperty('id')"></span>)</li>
+            </ul>
+        </div>
         <div><span tal:content="python: len(output.get('pages'))"></span> Pages Found</div>
         <table>
             <tr>

@@ -55,16 +55,21 @@ class PermissionAuditForm(form.Form):
             self.status = self.formErrorsMessage
             return
 
+        members = None
+
         if data.get('username'):
             pages = self.getPermListForUser(data.get('username'), data.get('path'))
         elif data.get('groupname'):
             pages = self.getPermListForUser(data.get('groupname'), data.get('path'))
+            members = api.user.get_users(groupname=data.get('groupname'))
         else:
             pages = self.getAllContentWithLocalPerms(data.get('path'))
 
         self.output = {'pages': pages,
                        'path': data.get('path'),
                        'username': data.get('username'),
+                       'members': members,
+                       'groupname': data.get('groupname'),
                        }
         # Set status on this form page
         # (this status message is not bind to the session and does not go thru redirects)

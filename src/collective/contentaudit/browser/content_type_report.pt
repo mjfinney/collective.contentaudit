@@ -19,7 +19,7 @@
       <div tal:condition="python: output.get('path')">Path Used: <span tal:content="output/path"></span></div>
       <div tal:condition="output/modified">Max Modified Date: <span tal:content="output/modified"></span></div>
       <div id="contenttype-list">
-          <table class="sortable">
+          <table>
               <tr>
                   <th>Title</th>
                   <th>Description</th>

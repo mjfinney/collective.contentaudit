@@ -55,21 +55,46 @@ class PermissionAuditForm(form.Form):
             self.status = self.formErrorsMessage
             return
 
-        members = None
+        portal_url = api.portal.get().absolute_url()
+
+        user_pages = None
+        group_pages = None
+        group_title = None
+        user_fullname = None
+        group_pages = []
 
         if data.get('username'):
-            pages = self.getPermListForUser(data.get('username'), data.get('path'))
+            user = api.user.get(data.get('username'))
+            user_fullname = user.getProperty('fullname')
+            user_pages = self.getPermListForUser(data.get('username'), data.get('path'))
+            groups = api.group.get_groups(username=data.get('username'))
+            for group in groups:
+                g = {}
+                g['id'] = group.getProperty('id')
+                g['title'] = group.getProperty('title')
+                g['pages'] = self.getPermListForUser(g['id'], data.get('path'))
+                g['link'] = portal_url + '/@@usergroup-groupmembership?groupname=' + g['id']
+                group_pages.append(g)
         elif data.get('groupname'):
-            pages = self.getPermListForUser(data.get('groupname'), data.get('path'))
-            members = api.user.get_users(groupname=data.get('groupname'))
+            g = {}
+            group = api.group.get(data.get('groupname'))
+            group_title = group.getProperty('title')
+            g['id'] = group.getProperty('id')
+            g['title'] = group_title
+            g['link'] = portal_url + '/@@usergroup-groupmembership?groupname=' + g['id']
+            g['pages'] = self.getPermListForUser(data.get('groupname'), data.get('path'))
+            g['members'] = api.user.get_users(groupname=data.get('groupname'))
+            group_pages.append(g)
         else:
             pages = self.getAllContentWithLocalPerms(data.get('path'))
 
-        self.output = {'pages': pages,
+        self.output = {'user_pages': user_pages,
                        'path': data.get('path'),
                        'username': data.get('username'),
-                       'members': members,
+                       'user_fullname': user_fullname,
                        'groupname': data.get('groupname'),
+                       'group_pages': group_pages,
+                       'report_h2': 'Results for ' + (user_fullname or group_title or data.get('path'))
                        }
         # Set status on this form page
         # (this status message is not bind to the session and does not go thru redirects)

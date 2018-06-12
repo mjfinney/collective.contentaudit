@@ -15,25 +15,50 @@
 
     <div id="form-output" tal:define="output view/form_instance/output;"
                           tal:condition="output">
+        <h2 tal:content="python:output.get('report_h2')"></h2>
         <div tal:condition="python: output.get('path')">Path Used: <span tal:content="output/path"></span>
         </div>
-        <div tal:condition="python: output.get('members')">
+        <div tal:condition="python: not output.get('user_pages')">
             Group Members: 
-            <ul tal:repeat="member python:output.get('members')">
+            <ul tal:repeat="member python:output.get('group_pages')[0].get('members')">
                 <li><span tal:replace="python:member.getProperty('fullname')"></span> (<span tal:replace="python:member.getProperty('id')"></span>)</li>
             </ul>
+            <a tal:attributes="href python:output.get('group_pages')[0].get('link')">Add/Remove Members</a>
         </div>
-        <div><span tal:content="python: len(output.get('pages'))"></span> Pages Found</div>
-        <table>
-            <tr>
-                <th>Title</th>
-                <th>Sharing</th>
-            </tr>
-            <tr tal:repeat="item output/pages">
-                <td><a tal:attributes="href item/getURL" tal:content="item/Title"></a></td>
-                <td><a tal:attributes="href string:${item/getURL}/@@sharing">View Sharing tab</a></td>
-            </tr>
-        </table>
+        <div tal:condition="python: output.get('user_pages')">
+            Group Memberships: 
+            <ul tal:repeat="group python:output.get('group_pages')">
+                <li><a tal:attributes="href python:group.get('link')"><span tal:replace="group/title"></span> (<span tal:replace="group/id"></span>)</a></li>
+            </ul>
+        </div>
+        <div tal:condition="python:output.get('user_pages') != None">
+          <h3><span tal:replace="python:output.get('user_fullname')"></span> (<span tal:replace="python:output.get('username')"></span>) Permissions</h3>
+          <div><span tal:content="python: len(output.get('user_pages'))"></span> pages with individual permissions.</div>
+          <table tal:condition="python:output.get('user_pages')">
+              <tr>
+                  <th>Title</th>
+                  <th>Sharing</th>
+              </tr>
+              <tr tal:repeat="item output/user_pages">
+                  <td><a tal:attributes="href item/getURL" tal:content="item/Title"></a></td>
+                  <td><a tal:attributes="href string:${item/getURL}/@@sharing">View Sharing tab</a></td>
+              </tr>
+          </table>
+        </div>
+        <div tal:repeat="group python:output.get('group_pages')">
+            <h3><span tal:replace="python:group.get('title')"></span> (<span tal:replace="python:group.get('id')"></span>) Permissions</h3>
+            <div><span tal:content="python: len(group.get('pages'))"></span> pages with group permissions.</div>
+            <table tal:condition="python:group.get('pages')">
+                <tr>
+                    <th>Title</th>
+                    <th>Sharing</th>
+                </tr>
+                <tr tal:repeat="item python:group.get('pages')">
+                    <td><a tal:attributes="href item/getURL" tal:content="item/Title"></a></td>
+                    <td><a tal:attributes="href string:${item/getURL}/@@sharing">View Sharing tab</a></td>
+                </tr>
+            </table>
+        </div>
     </div>
 </metal:text>
 

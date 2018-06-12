@@ -1,0 +1,76 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="collective.contentaudit">
+
+
+<metal:content-core metal:fill-slot="content-core">
+    <a href="@@content-reports">Back to Reports Main Page</a>
+    <h2>Reports</h2>
+<ul tal:define="counts view/form_instance/eventCounts">
+    <li><a tal:attributes="href string:${portal_url}/@@event_manager_users">List of users</a></li>
+    <li><a tal:attributes="href string:${portal_url}/@@event_manager?form.widgets.creator-empty-marker=&form.widgets.state%3Alist=private&form.widgets.state-empty-marker=1&form.widgets.tagless-empty-marker=1&form.widgets.broken_phone-empty-marker=1&form.widgets.date_precedes-empty-marker=1&form.widgets.show_creator%3Alist=selected&form.widgets.show_creator-empty-marker=1&form.widgets.show_state%3Alist=selected&form.widgets.show_state-empty-marker=1&form.widgets.show_created%3Alist=selected&form.widgets.show_created-empty-marker=1&form.widgets.show_tags%3Alist=selected&form.widgets.show_tags-empty-marker=1&form.widgets.show_recurring%3Alist=selected&form.widgets.show_recurring-empty-marker=1&form.widgets.show_start%3Alist=selected&form.widgets.show_start-empty-marker=1&form.widgets.show_end%3Alist=selected&form.widgets.show_end-empty-marker=1&form.buttons.search=Search">Private</a>: <span tal:replace="python:counts[0]">0</span></li>
+    <li><a tal:attributes="href string:${portal_url}/@@event_manager?form.widgets.creator-empty-marker=&form.widgets.state%3Alist=pending&form.widgets.state-empty-marker=1&form.widgets.tagless-empty-marker=1&form.widgets.broken_phone-empty-marker=1&form.widgets.date_precedes-empty-marker=1&form.widgets.show_creator%3Alist=selected&form.widgets.show_creator-empty-marker=1&form.widgets.show_state%3Alist=selected&form.widgets.show_state-empty-marker=1&form.widgets.show_created%3Alist=selected&form.widgets.show_created-empty-marker=1&form.widgets.show_tags%3Alist=selected&form.widgets.show_tags-empty-marker=1&form.widgets.show_recurring%3Alist=selected&form.widgets.show_recurring-empty-marker=1&form.widgets.show_start%3Alist=selected&form.widgets.show_start-empty-marker=1&form.widgets.show_end%3Alist=selected&form.widgets.show_end-empty-marker=1&form.buttons.search=Search">Pending</a>: <span tal:replace="python:counts[1]">0</span></li>
+    <li>Published: <span tal:replace="python:counts[2]">0</span></li>
+    <li><a tal:attributes="href string:${portal_url}/@@event_manager?form.widgets.creator-empty-marker=&form.widgets.state%3Alist=any&form.widgets.state-empty-marker=1&form.widgets.tagless%3Alist=selected&form.widgets.tagless-empty-marker=1&form.widgets.broken_phone-empty-marker=1&form.widgets.date_precedes-empty-marker=1&form.widgets.show_creator%3Alist=selected&form.widgets.show_creator-empty-marker=1&form.widgets.show_state%3Alist=selected&form.widgets.show_state-empty-marker=1&form.widgets.show_created%3Alist=selected&form.widgets.show_created-empty-marker=1&form.widgets.show_tags%3Alist=selected&form.widgets.show_tags-empty-marker=1&form.widgets.show_recurring%3Alist=selected&form.widgets.show_recurring-empty-marker=1&form.widgets.show_start%3Alist=selected&form.widgets.show_start-empty-marker=1&form.widgets.show_end%3Alist=selected&form.widgets.show_end-empty-marker=1&form.buttons.search=Search">Tagless</a>: <span tal:replace="python:counts[3]">0</span></li>
+    <li>Total: <span tal:replace="python:counts[4]">0</span></li>
+
+</ul>
+    <div id="form-input">
+        <span tal:replace="structure view/contents" />
+    </div>
+<tal:results define="data view/form_instance/data;" 
+             condition="data">
+<tal:block tal:define="events view/form_instance/getEvents;">
+<h2>Results</h2>
+<p tal:condition="not:events">There are no results.</p>
+<p tal:condition="data/tagless">Only events with no tags.</p>
+<p tal:condition="data/broken_phone">Only events with suspicious phone formats.</p>
+<p tal:condition="events"><span tal:replace="python:len(events)">0</span> Events</p>
+<table tal:condition="events" class="listing sortable">
+  <thead>
+    <tr>
+      <th tal:condition="data/show_creator">Creator</th>
+      <th tal:condition="data/show_state">State</th>
+      <th>Title</th>
+      <th tal:condition="data/show_created">Created On</th>
+      <th tal:condition="data/show_start">Starts On</th>
+      <th tal:condition="data/show_end">Ends On</th>
+      <!--<th tal:condition="data/start">Created On</th>-->
+      <!--<th tal:condition="data/show_created">Created On</th>-->
+      <!--
+      <th>Published On</th>
+      <th>Start</th>
+      <th>End</th>
+      -->
+      <th tal:condition="data/show_tags">Tags</th>
+    </tr>
+  </thead>
+<tal:block  tal:repeat="event events">
+<tr>
+<td tal:condition="data/show_creator" tal:content="event/Creator">Creator</td>
+<td tal:condition="data/show_state" tal:content="event/review_state">State</td>
+<td><a tal:attributes="href event/getURL" tal:content="event/Title">Title</a></td>
+<td tal:condition="data/show_created" tal:content="event/created">Created</td>
+<td tal:condition="data/show_start" tal:content="event/start">Start</td>
+<td tal:condition="data/show_end" tal:content="event/end">End</td>
+<!--
+<td tal:content="event/">Published On</td>
+<td tal:content="event/">Start</td>
+<td tal:content="event/">End</td>
+-->
+<td tal:condition="data/show_tags">
+  <tal:block tal:repeat="tag event/Subject">
+    <span tal:content="tag">Tag</span><br />
+  </tal:block>
+</td>
+</tr>
+</tal:block>
+</table>
+</tal:block>
+</tal:results>
+</metal:content-core>    
+</html>

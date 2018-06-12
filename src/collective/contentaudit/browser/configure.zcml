@@ -48,6 +48,14 @@
 
   <browser:page
       for="Products.CMFCore.interfaces.ISiteRoot"
+      name="event_manager"
+      class = ".event_manager.EventManagerFormView"
+      layer="..interfaces.ICollectiveContentauditLayer"
+      permission="contentaudit.reportspermission"
+      />
+
+  <browser:page
+      for="Products.CMFCore.interfaces.ISiteRoot"
       name="permission-report"
       class = ".permissions.PermissionAuditFormView"
       layer="..interfaces.ICollectiveContentauditLayer"

@@ -9,9 +9,10 @@ from zope.interface import Interface
 class IContentAuditControlPanel(Interface):
 
     reports = schema.Text(
-        title=u'First day of the conference',
+        title=u'Reports List',
         required=True,
-        default=u'[{"title": "Permissions", "id": "@@permission-report"}]',
+        default=u'''[{"title": "Permissions", "id": "@@permission-report"},
+                   {"title": "Events", "id": "@@event_manager"}]''',
     )
 
 

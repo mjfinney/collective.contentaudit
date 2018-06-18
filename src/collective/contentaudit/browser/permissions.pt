@@ -18,14 +18,14 @@
         <h2 tal:content="python:output.get('report_h2')"></h2>
         <div tal:condition="python: output.get('path')">Path Used: <span tal:content="output/path"></span>
         </div>
-        <div tal:condition="python: not output.get('user_pages')">
+        <div tal:condition="python: not output.get('user_fullname')">
             Group Members: 
             <ul tal:repeat="member python:output.get('group_pages')[0].get('members')">
                 <li><span tal:replace="python:member.getProperty('fullname')"></span> (<span tal:replace="python:member.getProperty('id')"></span>)</li>
             </ul>
             <a tal:attributes="href python:output.get('group_pages')[0].get('link')">Add/Remove Members</a>
         </div>
-        <div tal:condition="python: output.get('user_pages')">
+        <div tal:condition="python: output.get('user_fullname')">
             Group Memberships: 
             <ul tal:repeat="group python:output.get('group_pages')">
                 <li><a tal:attributes="href python:group.get('link')"><span tal:replace="group/title"></span> (<span tal:replace="group/id"></span>)</a></li>
